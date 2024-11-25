@@ -1,9 +1,208 @@
 using System;
 
+class Task1
+{
+    public void Execute()
+    {
+        int num1 = 1, num2 = 2, num3 = 10; 
+        int lastDigit = 7; 
+        int upperLimit = 10 + lastDigit;
+
+        Console.WriteLine("Task 1:");
+        CheckInRange(num1, upperLimit);
+        CheckInRange(num2, upperLimit);
+        CheckInRange(num3, upperLimit);
+    }
+
+    private void CheckInRange(int number, int upperLimit)
+    {
+        if (number >= 1 && number <= upperLimit)
+        {
+            Console.WriteLine($"Число {number} належить інтервалу [1, {upperLimit}]");
+        }
+        else
+        {
+            Console.WriteLine($"Число {number} не належить інтервалу [1, {upperLimit}]");
+        }
+    }
+}
+
+class Task2
+{
+    public void Execute()
+    {
+        double side1 = 1, side2 = 2, side3 = 3; 
+
+        Console.WriteLine("Task 2:");
+        if (IsValidTriangle(side1, side2, side3))
+        {
+            double perimeter = CalculatePerimeter(side1, side2, side3);
+            double area = CalculateArea(side1, side2, side3);
+            string triangleType = DetermineTriangleType(side1, side2, side3);
+            
+            Console.WriteLine($"Периметр: {perimeter}");
+            Console.WriteLine($"Площа: {area}");
+            Console.WriteLine($"Тип трикутника: {triangleType}");
+        }
+        else
+        {
+            Console.WriteLine("Це не є дійсним трикутником.");
+        }
+    }
+
+    private bool IsValidTriangle(double a, double b, double c)
+    {
+        return a + b > c && a + c > b && b + c > a;
+    }
+
+    private double CalculatePerimeter(double a, double b, double c)
+    {
+        return a + b + c;
+    }
+
+    private double CalculateArea(double a, double b, double c)
+    {
+        double s = (a + b + c) / 2;
+        return Math.Sqrt(s * (s - a) * (s - b) * (s - c));
+    }
+
+    private string DetermineTriangleType(double a, double b, double c)
+    {
+        if (a == b && b == c)
+        {
+            return "Рівносторонній";
+        }
+        else if (a == b || b == c || a == c)
+        {
+            return "Рівнобедрений";
+        }
+        else
+        {
+            return "Різносторонній";
+        }
+    }
+}
+
+class Task3
+{
+    public void Execute()
+    {
+        int lastDigit = 7; 
+        int[] array = new int[10 + lastDigit];
+        
+        // Заповнюємо масив випадковими числами
+        Random rand = new Random();
+        for (int i = 0; i < array.Length; i++)
+        {
+            array[i] = rand.Next(-100, 101); 
+        }
+
+        Console.WriteLine("Task 3:");
+        Console.WriteLine("Масив:");
+        foreach (var num in array)
+        {
+            Console.Write(num + " ");
+        }
+        Console.WriteLine();
+
+        int minValue = FindMinValue(array);
+        int maxValue = FindMaxValue(array);
+
+        Console.WriteLine($"Мінімальне значення: {minValue}");
+        Console.WriteLine($"Максимальне значення: {maxValue}");
+    }
+
+    private int FindMinValue(int[] array)
+    {
+        int min = array[0];
+        foreach (var num in array)
+        {
+            if (num < min)
+                min = num;
+        }
+        return min;
+    }
+
+    private int FindMaxValue(int[] array)
+    {
+        int max = array[0];
+        foreach (var num in array)
+        {
+            if (num > max)
+                max = num;
+        }
+        return max;
+    }
+}
+
+class Task4
+{
+    public void Execute()
+    {
+        int lastDigit = 7; 
+        int[] array = new int[10 + lastDigit];
+        int M = 50; // Задане число M
+
+        Random rand = new Random();
+        for (int i = 0; i < array.Length; i++)
+        {
+            array[i] = rand.Next(-100, 101); 
+        }
+
+        Console.WriteLine("Task 4:");
+        Console.WriteLine("Масив:");
+        foreach (var num in array)
+        {
+            Console.Write(num + " ");
+        }
+        Console.WriteLine();
+
+        int[] newArray = FilterArrayByModulus(array, M);
+
+        Console.WriteLine($"Число M: {M}");
+        Console.WriteLine("Отриманий масив:");
+        foreach (var num in newArray)
+        {
+            Console.Write(num + " ");
+        }
+        Console.WriteLine();
+    }
+
+    private int[] FilterArrayByModulus(int[] array, int M)
+    {
+        var result = new System.Collections.Generic.List<int>();
+        foreach (var num in array)
+        {
+            if (Math.Abs(num) > M)
+            {
+                result.Add(num);
+            }
+        }
+        return result.ToArray();
+    }
+}
+
+class Controller
+{
+    public void ExecuteAllTasks()
+    {
+        Task1 task1 = new Task1();
+        Task2 task2 = new Task2();
+        Task3 task3 = new Task3();
+        Task4 task4 = new Task4();
+
+        task1.Execute();
+        task2.Execute();
+        task3.Execute();
+        task4.Execute();
+    }
+}
+
 class Program
 {
     static void Main()
     {
-        Console.WriteLine("Hello, World!");
+        Controller controller = new Controller();
+        controller.ExecuteAllTasks();
     }
 }
